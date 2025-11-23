@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import {
@@ -18,6 +19,8 @@ import {
   PromptInputSubmit,
   PromptInputTextarea,
   PromptInputFooter,
+  PromptInputTools,
+  PromptInputSpeechButton,
 } from '@/components/ai-elements/prompt-input';
 import {
   ChainOfThought,
@@ -25,25 +28,135 @@ import {
   ChainOfThoughtContent,
   ChainOfThoughtStep,
 } from '@/components/ai-elements/chain-of-thought';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useChat } from '@ai-sdk/react';
-import { CopyIcon, RefreshCcwIcon, CloudIcon, NewspaperIcon, BarChart3Icon, ThermometerIcon, BrainIcon } from 'lucide-react';
+import { CopyIcon, RefreshCcwIcon, CloudIcon, NewspaperIcon, BarChart3Icon, ThermometerIcon, BrainIcon, Volume2Icon, VolumeXIcon } from 'lucide-react';
 import { Loader } from '@/components/ai-elements/loader';
 
 export default function Chat() {
   const [input, setInput] = useState('');
   const { messages, sendMessage, status, regenerate } = useChat();
-
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
+  const [testLoading, setTestLoading] = useState(false);
+  
   const handleSubmit = (message: { text: string }) => {
     if (!message.text) return;
     sendMessage({ text: message.text });
     setInput('');
   };
 
+  const testSpeech = async () => {
+    try {
+      setTestLoading(true);
+      
+      // Call the TTS API
+      const response = await fetch('/api/tts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: 'Hello! This is a test of the text to speech functionality. Can you hear me?' }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate speech');
+      }
+
+      // Create an audio element and play the audio
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      
+      audio.onended = () => {
+        URL.revokeObjectURL(audioUrl);
+        setTestLoading(false);
+      };
+
+      audio.onerror = () => {
+        URL.revokeObjectURL(audioUrl);
+        setTestLoading(false);
+      };
+
+      await audio.play();
+    } catch (error) {
+      console.error('Error playing audio:', error);
+      setTestLoading(false);
+    }
+  };
+
+  const handleSpeak = async (text: string, messageId: string) => {
+    try {
+      // If already playing this message, stop it
+      if (playingAudioId === messageId && audioElement) {
+        audioElement.pause();
+        setPlayingAudioId(null);
+        setAudioElement(null);
+        return;
+      }
+
+      // Stop any currently playing audio
+      if (audioElement) {
+        audioElement.pause();
+        setAudioElement(null);
+      }
+
+      setPlayingAudioId(messageId);
+
+      // Call the TTS API
+      const response = await fetch('/api/tts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate speech');
+      }
+
+      // Create an audio element and play the audio
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      
+      audio.onended = () => {
+        setPlayingAudioId(null);
+        setAudioElement(null);
+        URL.revokeObjectURL(audioUrl);
+      };
+
+      audio.onerror = () => {
+        setPlayingAudioId(null);
+        setAudioElement(null);
+        URL.revokeObjectURL(audioUrl);
+      };
+
+      setAudioElement(audio);
+      await audio.play();
+    } catch (error) {
+      console.error('Error playing audio:', error);
+      setPlayingAudioId(null);
+      setAudioElement(null);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6 relative size-full h-screen">
       <div className="flex flex-col h-full">
-        <h1 className="text-2xl font-bold mb-4">Demand Forecasting Assistant</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-bold">Demand Forecasting Assistant</h1>
+          <button
+            onClick={testSpeech}
+            disabled={testLoading}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            <Volume2Icon className="size-4" />
+            {testLoading ? 'Playing...' : 'Test Speech'}
+          </button>
+        </div>
         
         <Conversation className="h-full">
           <ConversationContent>
@@ -72,6 +185,16 @@ export default function Chat() {
                                 label="Copy"
                               >
                                 <CopyIcon className="size-3" />
+                              </MessageAction>
+                              <MessageAction
+                                onClick={() => handleSpeak(part.text, message.id)}
+                                label={playingAudioId === message.id ? "Stop" : "Speak"}
+                              >
+                                {playingAudioId === message.id ? (
+                                  <VolumeXIcon className="size-3" />
+                                ) : (
+                                  <Volume2Icon className="size-3" />
+                                )}
                               </MessageAction>
                             </MessageActions>
                           )}
@@ -229,12 +352,17 @@ export default function Chat() {
         <PromptInput onSubmit={handleSubmit} className="mt-4">
           <PromptInputBody>
             <PromptInputTextarea
-              onChange={(e) => setInput(e.target.value)}
-              value={input}
+              ref={textareaRef} // for speech recognition
               placeholder="Ask about demand forecasting..."
             />
           </PromptInputBody>
           <PromptInputFooter>
+            <PromptInputTools>
+            </PromptInputTools>
+            <PromptInputSpeechButton
+                onTranscriptionChange={setInput}
+                textareaRef={textareaRef}
+              />
             <PromptInputSubmit disabled={!input && !status} status={status} />
           </PromptInputFooter>
         </PromptInput>
