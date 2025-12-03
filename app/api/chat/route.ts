@@ -1,9 +1,5 @@
 import { openai } from '@ai-sdk/openai';
 import { Experimental_Agent as Agent, stepCountIs, UIMessage, validateUIMessages } from 'ai';
-import { weatherTool } from './tools/weather';
-import { newsSearchTool } from './tools/news';
-import { sentimentTool } from './tools/sentiment';
-import { predictionTool } from './tools/prediction';
 import { sharkInvestmentTool } from './tools/shark-investments';
 
 export const maxDuration = 30;
