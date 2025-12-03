@@ -39,9 +39,7 @@ const profileSchema = z.object({
   age: z.string().refine((val) => !isNaN(Number(val)) && Number(val) >= 18, {
     message: "You must be at least 18 years old.",
   }),
-  gender: z.enum(["male", "female", "other"], {
-    required_error: "Please select a gender.",
-  }),
+  gender: z.enum(["male", "female", "other"]).optional(),
   companyName: z.string().min(2, { message: "Company name is required." }),
   email: z.string().email({ message: "Invalid email address." }),
   contactNumber: z.string().min(10, { message: "Contact number must be at least 10 digits." }),
@@ -87,7 +85,7 @@ export function ProfileEdit() {
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you are done.
           </DialogDescription>
         </DialogHeader>
         
