@@ -95,13 +95,14 @@ export const sharkInvestmentTool = tool({
     const normalizedCompany = company?.trim().toLowerCase();
     const normalizedQuery = query?.trim().toLowerCase();
 
-    const targetShark =
-      (normalizedSlug &&
-        sharks.find((shark) => shark.slug === normalizedSlug)) ??
-      (normalizedQuery &&
-        sharks.find((shark) =>
-          shark.name.toLowerCase().includes(normalizedQuery)
-        ));
+    let targetShark: SharkEntry | undefined;
+    if (normalizedSlug) {
+      targetShark = sharks.find((shark) => shark.slug === normalizedSlug);
+    } else if (normalizedQuery) {
+      targetShark = sharks.find((shark) =>
+        shark.name.toLowerCase().includes(normalizedQuery)
+      );
+    }
 
     let filteredInvestments = allInvestments;
     let focusLabel = 'Shark Tank India dataset';
@@ -208,7 +209,7 @@ export const sharkInvestmentTool = tool({
       targetShark !== undefined
         ? [
             {
-              name: targetShark.name,
+                name: targetShark.name,
               slug: targetShark.slug,
               role: targetShark.role,
               dealCount: targetShark.investments.length,
