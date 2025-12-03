@@ -44,79 +44,240 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Shark Tank India / SonyLIV Theme */
+  --radius: 0.75rem;
+  
+  /* Brand Colors - SonyLIV Yellow/Gold Theme */
+  --sony-yellow: 45 100% 51%;        /* Primary SonyLIV Yellow */
+  --sony-gold: 43 96% 56%;           /* Gold accent */
+  --sony-orange: 33 100% 50%;        /* Orange highlight */
+  --sony-dark: 0 0% 7%;              /* Almost black background */
+  --sony-darker: 0 0% 4%;            /* Pure dark background */
+  --sony-light: 0 0% 95%;            /* Light text */
+  --sony-gray: 0 0% 20%;             /* Dark gray for cards */
+  
+  /* Backgrounds */
+  --background: var(--sony-darker);
+  --foreground: var(--sony-light);
+  
+  /* Cards & Panels */
+  --card: 0 0% 9%;
+  --card-foreground: var(--sony-light);
+  --card-hover: 0 0% 12%;
+  
+  /* Popover */
+  --popover: 0 0% 8%;
+  --popover-foreground: var(--sony-light);
+  
+  /* Primary - SonyLIV Yellow */
+  --primary: var(--sony-yellow);
+  --primary-foreground: 0 0% 0%;
+  
+  /* Secondary - Dark gray */
+  --secondary: 0 0% 15%;
+  --secondary-foreground: var(--sony-light);
+  
+  /* Muted */
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 60%;
+  
+  /* Accent - Gold highlight */
+  --accent: var(--sony-gold);
+  --accent-foreground: 0 0% 0%;
+  
+  /* Destructive */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  
+  /* Borders & Inputs */
+  --border: 0 0% 18%;
+  --input: 0 0% 12%;
+  --ring: var(--sony-yellow);
+  
+  /* Charts - SonyLIV Theme */
+  --chart-1: var(--sony-yellow);
+  --chart-2: var(--sony-gold);
+  --chart-3: var(--sony-orange);
+  --chart-4: 160 60% 45%;
+  --chart-5: 217 91% 60%;
+  
+  /* Sidebar */
+  --sidebar: var(--sony-dark);
+  --sidebar-foreground: var(--sony-light);
+  --sidebar-primary: var(--sony-yellow);
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 0 0% 15%;
+  --sidebar-accent-foreground: var(--sony-light);
+  --sidebar-border: 0 0% 18%;
+  --sidebar-ring: var(--sony-yellow);
+  
+  /* Gradients */
+  --gradient-shark: linear-gradient(135deg, 
+    hsl(var(--sony-yellow)) 0%, 
+    hsl(var(--sony-gold)) 50%, 
+    hsl(var(--sony-orange)) 100%);
+  
+  --gradient-sony: linear-gradient(135deg, 
+    hsl(0 0% 4%) 0%, 
+    hsl(0 0% 7%) 50%, 
+    hsl(0 0% 5%) 100%);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Dark mode uses same SonyLIV theme - already dark by default */
+  --background: var(--sony-darker);
+  --foreground: var(--sony-light);
+  --card: 0 0% 9%;
+  --card-foreground: var(--sony-light);
+  --popover: 0 0% 8%;
+  --popover-foreground: var(--sony-light);
+  --primary: var(--sony-yellow);
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 15%;
+  --secondary-foreground: var(--sony-light);
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 60%;
+  --accent: var(--sony-gold);
+  --accent-foreground: 0 0% 0%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 18%;
+  --input: 0 0% 12%;
+  --ring: var(--sony-yellow);
+  --chart-1: var(--sony-yellow);
+  --chart-2: var(--sony-gold);
+  --chart-3: var(--sony-orange);
+  --chart-4: 160 60% 45%;
+  --chart-5: 217 91% 60%;
+  --sidebar: var(--sony-dark);
+  --sidebar-foreground: var(--sony-light);
+  --sidebar-primary: var(--sony-yellow);
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 0 0% 15%;
+  --sidebar-accent-foreground: var(--sony-light);
+  --sidebar-border: 0 0% 18%;
+  --sidebar-ring: var(--sony-yellow);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html,
   body {
-    @apply bg-background text-foreground;
+    @apply m-0 p-0 bg-background text-foreground;
+  }
+}
+
+/* Shark Tank India / SonyLIV Utility Classes */
+@layer utilities {
+  /* Gradient Text - SonyLIV Yellow/Gold */
+  .gradient-shark-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, 
+      hsl(45 100% 51%) 0%, 
+      hsl(43 96% 56%) 50%, 
+      hsl(33 100% 50%) 100%);
+  }
+  
+  /* Gradient Backgrounds */
+  .gradient-shark-bg {
+    background-image: linear-gradient(135deg, 
+      hsl(45 100% 51%) 0%, 
+      hsl(43 96% 56%) 50%, 
+      hsl(33 100% 50%) 100%);
+  }
+  
+  .gradient-sony-bg {
+    background-image: linear-gradient(135deg, 
+      hsl(220 40% 6%) 0%, 
+      hsl(230 50% 10%) 50%, 
+      hsl(240 40% 8%) 100%);
+  }
+  
+  /* Glassmorphism */
+  .glass-shark {
+    @apply bg-slate-900/50 backdrop-blur-xl border border-white/10;
+  }
+  
+  /* Card Hover Effects */
+  .card-shark-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 hover:-translate-y-1;
+  }
+  
+  /* Button Styles - SonyLIV Yellow Theme */
+  .btn-shark-primary {
+    @apply bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-semibold rounded-xl transition-all shadow-lg shadow-yellow-500/30;
+  }
+  
+  .btn-shark-secondary {
+    @apply bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20 rounded-xl transition-all;
+  }
+  
+  /* Tab Styles - SonyLIV Yellow Theme */
+  .tab-shark-active {
+    @apply bg-gradient-to-r from-yellow-400 to-orange-500 text-black shadow-lg shadow-yellow-500/50;
+  }
+  
+  /* Input Styles - SonyLIV Theme */
+  .input-shark {
+    @apply bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-500 focus:border-yellow-500 focus:ring-yellow-500;
+  }
+  
+  /* Scrollbar Styling - SonyLIV Yellow */
+  .scrollbar-shark {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(45 100% 51%) hsl(0 0% 7%);
+  }
+  
+  .scrollbar-shark::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .scrollbar-shark::-webkit-scrollbar-track {
+    background: hsl(0 0% 7%);
+  }
+  
+  .scrollbar-shark::-webkit-scrollbar-thumb {
+    background: hsl(45 100% 51%);
+    border-radius: 4px;
+  }
+  
+  .scrollbar-shark::-webkit-scrollbar-thumb:hover {
+    background: hsl(43 96% 56%);
+  }
+  
+  /* Typography - SonyLIV Yellow/Gold Gradient */
+  .heading-shark {
+    @apply font-bold bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text text-transparent;
+  }
+  
+  .text-shark-muted {
+    @apply text-slate-400;
+  }
+  
+  /* Animations - SonyLIV Yellow Glow */
+  @keyframes shark-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(250, 204, 21, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(250, 204, 21, 0.6);
+    }
+  }
+  
+  .animate-shark-glow {
+    animation: shark-glow 3s ease-in-out infinite;
+  }
+  
+  /* Badge Styles - SonyLIV Yellow */
+  .badge-shark {
+    @apply px-3 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full text-xs font-bold text-black;
+  }
+  
+  /* Overlay */
+  .overlay-shark {
+    @apply absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent;
   }
 }
